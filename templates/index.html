@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title> Weather Tracker </title>
+
+	<!-- Ajax -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Chart.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+	<!-- Local Javascript / JQuery -->
+	<!-- External file does not work - 404 file not found (looks in localhost root dir -- idk how to fix yet) -->
+	<!-- <script type='text/javascript' language='javascript' src='templates/javascript.js'></script> -->
+	<script>
+		// Creating the Line Chart
+		$(document).ready(function(){
+			// Global Script Root
+			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+			var ctx = document.getElementById('main_chart').getContext('2d');
+			
+			var config = {
+				type: 'line',
+
+				data: {
+					labels: [1, 2, 3, 4, 5],
+					datasets: [{
+						label: 'Highest Temp',
+						backgroundColor: 'rgba(255, 0, 0, 0.6)',
+						borderColor: 'rgba(255, 0, 0, 0.6)',
+						data: [12, 34, 12, 1, 34],
+						fill: false,
+					}, {
+						label: 'Lowest Temp',
+						fill: false,
+						backgroundColor: 'rgba(0, 0, 255, 0.6)',
+						borderColor: 'rgba(0, 0, 255, 0.6)',
+						data: [1, 2, 4, 2, 7],
+					}, {
+						label: 'Mean Temp',
+						fill: false,
+						backgroundColor: 'rgba(0, 255, 0, 0.6)',
+						borderColor: 'rgba(0, 255, 0, 0.6)',
+						data: [4, 2, 1, 6, 3],
+					}],
+				},
+
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Line Chart'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					hover: {
+						mode: 'nearest',
+						intersect: true
+					},
+					scales: {
+						xAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: 'Sample'
+							}
+						}],
+						yAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: 'Value'
+							}
+						}]
+					}
+				}
+			}
+
+			// make chart
+			window.myLine = new Chart(ctx, config);
+			console.log("Hi");
+
+			// Button Click (Populating Chart Data)
+			$("#populate").click(function() {
+				$.getJSON($SCRIPT_ROOT + '/chart', function(received_data) {
+					config.data.labels=["Jan 1938"];
+					config.data.datasets[0].data = [received_data.high_temp];
+					config.data.datasets[1].data = [received_data.low_temp];
+					config.data.datasets[2].data = [received_data.mean_temp];
+					window.myLine.update();
+					console.log("Done");
+				});
+			});
+		});
+
+	</script>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+	<!-- Overridden styles -->
+
+
+</head>
+
+<body>
+	<!-- Header -->
+	<div class = "jumbotron">
+		<h1> Weather Tracker </h1>
+		<sub> Annual and Monthly Weather Patterns and Trends in Ontario </sub>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<!-- Spacer -->
+			<div class="col-1"></div>
+
+			<!-- Main Chart - Where the relevant data will be displayed -->
+			<div class="col-10">
+				<canvas id="main_chart"></canvas>
+			</div>
+
+			<!-- Spacer -->
+			<div class="col-1">
+				<button type="button" class="btn btn-primary" id="populate">Magic</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
