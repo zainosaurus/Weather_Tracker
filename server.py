@@ -13,6 +13,42 @@ def load_index():
 # Return Chart Data
 @app.route("/chart")
 def chart():
+	# Reading csv file and cleaning up data
+	file = open("toronto_historical.csv")
+	file_contents = file.readlines()
+	toronto_info = file_contents[21:1980]	# lines which have useful data on them
+	for i in range(len(toronto_info)):
+		toronto_info[i] = toronto_info[i].split(",")
+		for j in range(len(toronto_info[i])):
+			toronto_info[i][j] = toronto_info[i][j].strip('"')
+			print(toronto_info[i])
+
+	# Creating Datasets for chart
+	x_labels = []
+	high_temps = []
+	low_temps = []
+	mean_temps= []
+
+	for i in range(len(toronto_info)):
+		x_labels.append(toronto_info[i][0])
+		high_temps.append(toronto_info[i][3])
+		low_temps.append(toronto_info[i][5])
+		mean_temps.append(toronto_info[i][7])
+
+	# creating json object
+	return jsonify (
+		name = "Toronto",
+		mean_temp = mean_temps,
+		high_temp = high_temps,
+		low_temp = low_temps,
+		labels = x_labels
+	)
+
+
+
+
+@app.route("/test")
+def test():
 	file = open("1-1938.csv")
 	file_contents = file.readlines()
 	tobermory_info = file_contents[161]	#toronto

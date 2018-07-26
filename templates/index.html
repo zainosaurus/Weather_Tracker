@@ -86,7 +86,7 @@
 			// Button Click (Populating Chart Data)
 			$("#populate").click(function() {
 				$.getJSON($SCRIPT_ROOT + '/chart', function(received_data) {
-					config.data.labels=["Jan 1938", 2, 3, 4, 5];
+					config.data.labels= received_data.labels;
 					config.data.datasets[0].data = received_data.high_temp;
 					config.data.datasets[1].data = received_data.low_temp;
 					config.data.datasets[2].data = received_data.mean_temp;
