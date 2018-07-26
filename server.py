@@ -24,9 +24,9 @@ def chart():
 	# creating json object
 	return jsonify (
 		name = tobermory_info[0],
-		mean_temp = float(tobermory_info[4]),
-		high_temp = float(tobermory_info[6]),
-		low_temp = float(tobermory_info[8])
+		mean_temp = [1, 2, 3, 2, 1],#float(tobermory_info[4]),
+		high_temp = [3, 1, 6, 2, 9],#float(tobermory_info[6]),
+		low_temp = [1, 2, 1, 3, 1]#float(tobermory_info[8])
 	)
 
 
