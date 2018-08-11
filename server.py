@@ -13,6 +13,9 @@ def load_index():
 # Return Chart Data
 @app.route("/chart")
 def chart():
+	# test: reading month that was sent with request
+	month = request.args.get('month')
+
 	# Reading csv file and cleaning up data
 	file = open("toronto_historical.csv")
 	file_contents = file.readlines()
@@ -30,14 +33,17 @@ def chart():
 	mean_temps= []
 
 	for i in range(len(toronto_info)):
-		x_labels.append(toronto_info[i][0])
-		high_temps.append(toronto_info[i][3])
-		low_temps.append(toronto_info[i][5])
-		mean_temps.append(toronto_info[i][7])
+		if int(toronto_info[i][2]) == 6:	# January -- > In the future use a bool array as a mask to filter out which months to show (for yearly trends)
+			x_labels.append(toronto_info[i][0])
+			high_temps.append(toronto_info[i][3])
+			low_temps.append(toronto_info[i][5])
+			mean_temps.append(toronto_info[i][7])
+
+	print(month)
 
 	# creating json object
 	return jsonify (
-		name = "Toronto",
+		name = "Annual June Temperatures in Toronto",
 		mean_temp = mean_temps,
 		high_temp = high_temps,
 		low_temp = low_temps,

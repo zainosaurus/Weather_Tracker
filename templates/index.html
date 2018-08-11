@@ -65,14 +65,14 @@
 							display: true,
 							scaleLabel: {
 								display: true,
-								labelString: 'Sample'
+								labelString: 'Date'
 							}
 						}],
 						yAxes: [{
 							display: true,
 							scaleLabel: {
 								display: true,
-								labelString: 'Value'
+								labelString: 'Temperature (deg C)'
 							}
 						}]
 					}
@@ -84,12 +84,14 @@
 			console.log("Hi");
 
 			// Button Click (Populating Chart Data)
-			$("#populate").click(function() {
-				$.getJSON($SCRIPT_ROOT + '/chart', function(received_data) {
+			$(".month").click(function() {
+				console.log("Click ID: " + $(this).attr('id'));
+				$.getJSON($SCRIPT_ROOT + '/chart', {month:$(this).attr('id')}, function(received_data) {
 					config.data.labels= received_data.labels;
 					config.data.datasets[0].data = received_data.high_temp;
 					config.data.datasets[1].data = received_data.low_temp;
 					config.data.datasets[2].data = received_data.mean_temp;
+					config.options.title.text = received_data.name;
 					window.myLine.update();
 					console.log("Done");
 				});
@@ -100,6 +102,9 @@
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+		<!-- Bootstrap js scripts - used for dropdown menus -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 	<!-- Overridden styles -->
 
@@ -114,6 +119,47 @@
 	</div>
 
 	<div class="container">
+		<!-- Data Options -->
+		<div class = "row">
+			<div class="col-6">
+				<div class="btn-group">
+					<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Month
+					</button>
+					<div class="dropdown-menu">
+				  		<a class="dropdown-item month" id="Jan">January</a>
+				 		<a class="dropdown-item month" id="Feb">February</a>
+						<a class="dropdown-item month" id="Mar">March</a>
+						<a class="dropdown-item month" id="Apr">April</a>
+				 		<a class="dropdown-item month" id="May">May</a>
+						<a class="dropdown-item month" id="Jun">June</a>
+						<a class="dropdown-item month" id="Jul">July</a>
+				 		<a class="dropdown-item month" id="Aug">August</a>
+						<a class="dropdown-item month" id="Sep">September</a>
+						<a class="dropdown-item month" id="Oct">October</a>
+				 		<a class="dropdown-item month" id="Nov">November</a>
+						<a class="dropdown-item month" id="Dec">December</a>
+				    <div class="dropdown-divider"></div>
+				    	<a class="dropdown-item month" id="all_months">All Months</a>
+					</div>
+				</div>
+				
+			</div>
+			<div class ="col-6">
+				<div class="btn-group">
+					<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Start Year
+					</button>
+					<div class="dropdown-menu">
+				  		<a class="dropdown-item" href="#">Action</a>
+				 		<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Something else here</a>
+				    <div class="dropdown-divider"></div>
+				    	<a class="dropdown-item" href="#">Separated link</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<!-- Spacer -->
 			<div class="col-1"></div>
@@ -125,10 +171,16 @@
 
 			<!-- Spacer -->
 			<div class="col-1">
-				<button type="button" class="btn btn-primary" id="populate">Magic</button>
+				<p><b> Annual Data </b></p>
+				<button type="button" class="btn btn-primary month" id="populate">January</button>
 			</div>
 		</div>
 	</div>
+
+
+<!-- Bootstrap js scripts -->
+
+<!-- Tried putting js scripts here, but they break the app for some reason -->
 
 </body>
 
