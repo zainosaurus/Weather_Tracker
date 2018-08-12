@@ -28,6 +28,26 @@ def chart():
 	if (month == 'all_months'):
 		for i in range(len(month_mask)):
 			month_mask[i] = True
+	elif (month == 'winter_months'):
+		#lazy way to do it. Dec - Feb
+		month_mask[11] = True
+		month_mask[0] = True
+		month_mask[1] = True
+	elif (month == 'spring_months'):
+		#lazy way to do it. Mar - May
+		month_mask[2] = True
+		month_mask[3] = True
+		month_mask[4] = True
+	elif (month == 'summer_months'):
+		#lazy way to do it. Jun - Aug
+		month_mask[5] = True
+		month_mask[6] = True
+		month_mask[7] = True
+	elif (month == 'fall_months'):
+		#lazy way to do it. Sep - Nov
+		month_mask[8] = True
+		month_mask[9] = True
+		month_mask[10] = True
 	else:
 		month_mask[month_dict[month]] = True
 
