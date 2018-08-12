@@ -19,7 +19,7 @@
 			// Global Script Root
 			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 			var ctx = document.getElementById('main_chart').getContext('2d');
-			
+
 			var config = {
 				type: 'line',
 
@@ -121,31 +121,33 @@
 	<div class="container">
 		<!-- Data Options -->
 		<div class = "row">
-			<div class="col-6">
+			<div class='col-4 spacer'></div>
+			<div class="col-1">
 				<div class="btn-group">
 					<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    Month
 					</button>
 					<div class="dropdown-menu">
-				  		<a class="dropdown-item month" id="Jan">January</a>
-				 		<a class="dropdown-item month" id="Feb">February</a>
-						<a class="dropdown-item month" id="Mar">March</a>
-						<a class="dropdown-item month" id="Apr">April</a>
+				  		<a class="dropdown-item month" id="January">January</a>
+				 		<a class="dropdown-item month" id="February">February</a>
+						<a class="dropdown-item month" id="March">March</a>
+						<a class="dropdown-item month" id="April">April</a>
 				 		<a class="dropdown-item month" id="May">May</a>
-						<a class="dropdown-item month" id="Jun">June</a>
-						<a class="dropdown-item month" id="Jul">July</a>
-				 		<a class="dropdown-item month" id="Aug">August</a>
-						<a class="dropdown-item month" id="Sep">September</a>
-						<a class="dropdown-item month" id="Oct">October</a>
-				 		<a class="dropdown-item month" id="Nov">November</a>
-						<a class="dropdown-item month" id="Dec">December</a>
+						<a class="dropdown-item month" id="June">June</a>
+						<a class="dropdown-item month" id="July">July</a>
+				 		<a class="dropdown-item month" id="August">August</a>
+						<a class="dropdown-item month" id="September">September</a>
+						<a class="dropdown-item month" id="October">October</a>
+				 		<a class="dropdown-item month" id="November">November</a>
+						<a class="dropdown-item month" id="December">December</a>
 				    <div class="dropdown-divider"></div>
 				    	<a class="dropdown-item month" id="all_months">All Months</a>
 					</div>
 				</div>
-				
+
 			</div>
-			<div class ="col-6">
+			<div class='col-2 spacer'></div>
+			<div class ="col-1">
 				<div class="btn-group">
 					<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    Start Year
@@ -159,10 +161,12 @@
 					</div>
 				</div>
 			</div>
+			<div class='col-4 spacer'></div>
 		</div>
 		<div class="row">
 			<!-- Spacer -->
-			<div class="col-1"></div>
+			<div class="col-1 spacer">
+			</div>
 
 			<!-- Main Chart - Where the relevant data will be displayed -->
 			<div class="col-10">
@@ -170,9 +174,7 @@
 			</div>
 
 			<!-- Spacer -->
-			<div class="col-1">
-				<p><b> Annual Data </b></p>
-				<button type="button" class="btn btn-primary month" id="populate">January</button>
+			<div class="col-1 spacer">
 			</div>
 		</div>
 	</div>
@@ -183,28 +185,3 @@
 <!-- Tried putting js scripts here, but they break the app for some reason -->
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

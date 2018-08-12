@@ -15,6 +15,22 @@ def load_index():
 def chart():
 	# test: reading month that was sent with request
 	month = request.args.get('month')
+	print("Month " + month)
+
+	#DEFINING dict for mapping months to numbers
+	month_dict = {'January': 0, 'February':1, 'March': 2, 'April':3, 'May': 4, 'June':5,
+				  'July': 6, 'August':7, 'September': 8, 'October':9, 'November': 10, 'December':11}
+
+	# mask to determine which month(s) to display on chart
+	month_mask = [False, False, False, False, False, False, False, False, False, False, False, False]
+
+	# setting mask appropriately based on month sent with request
+	if (month == 'all_months'):
+		for i in range(len(month_mask)):
+			month_mask[i] = True
+	else:
+		month_mask[month_dict[month]] = True
+
 
 	# Reading csv file and cleaning up data
 	file = open("toronto_historical.csv")
@@ -24,7 +40,7 @@ def chart():
 		toronto_info[i] = toronto_info[i].split(",")
 		for j in range(len(toronto_info[i])):
 			toronto_info[i][j] = toronto_info[i][j].strip('"')
-			print(toronto_info[i])
+			#print(toronto_info[i])
 
 	# Creating Datasets for chart
 	x_labels = []
@@ -32,18 +48,19 @@ def chart():
 	low_temps = []
 	mean_temps= []
 
+	print (month_mask)
 	for i in range(len(toronto_info)):
-		if int(toronto_info[i][2]) == 6:	# January -- > In the future use a bool array as a mask to filter out which months to show (for yearly trends)
+		current_month = int(toronto_info[i][2]) - 1
+		if month_mask[current_month] == True:
 			x_labels.append(toronto_info[i][0])
 			high_temps.append(toronto_info[i][3])
 			low_temps.append(toronto_info[i][5])
 			mean_temps.append(toronto_info[i][7])
 
-	print(month)
 
 	# creating json object
 	return jsonify (
-		name = "Annual June Temperatures in Toronto",
+		name = "Yearly " + month + " Temperatures in Toronto",
 		mean_temp = mean_temps,
 		high_temp = high_temps,
 		low_temp = low_temps,
